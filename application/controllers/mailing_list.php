@@ -49,6 +49,36 @@ class Mailing_list extends CI_Controller
   }//end add()
   public function insert()
   {//will insert the data entered via add()
+  $this->load->model('Mailing_list_model');
+	$this->load->library('form_validation');
+	$this->load->helper('url');	  
+  //echo "Insert clicked!";
+	  /*echo '<pre>';
+	  var_dump($_POST);
+	  echo '</pre>';*/
+	  if($this->form_validation->run == FALSE){
+		 //failed validation - send back to form 
+		  echo "Insert Failed!";
+		  
+		  }else{//insert data
+			  $post = arry(
+			  	'first_name'=> $this->input->post('first_name'),
+			  	'last_name'=> $this->input->post('last_name'),
+			  	'email'=> $this->input->post('email'),
+			  	'address' => $this->input->post('address'),
+			  	'state_code' => $this->input->post('state_code'),
+			  	'zip_postal' => $this->input->post('zip_postal'),
+			  	'username' => $this->input->post('username'),
+			  	'password' => $this->input->post('password'),
+			  	'bio' => $this->input->post('bio'),
+			  	'interests' => $this->input->post('interests'),
+			  	'num_tours' => $this->input->post('num_tours'),
+			  	
+			  
+			  );
+			  $this->Mailing_list_model->insert($post);
+			  echo "Data Inserted?";
+			  }
 	  
 	}//end insert()
  

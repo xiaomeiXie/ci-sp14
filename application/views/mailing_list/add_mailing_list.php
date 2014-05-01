@@ -50,6 +50,13 @@ echo validation_errors();
 	 echo form_label('Address','address') . ': ';
 	echo form_input($address) . '<br />';
     
+	 $state_code = array(
+		'name' => 'state_code',
+		'id' => 'state_code',
+	);
+	 echo form_label('State','state_code') . ': ';
+	echo form_input($state_code) . '<br />';
+	
     $zip_postal = array(
 		'name' => 'zip_postal',
 		'id' => 'zip_postal',
@@ -57,6 +64,41 @@ echo validation_errors();
 	 echo form_label('Zip','zip_postal') . ': ';
 	echo form_input($zip_postal) . '<br />';
     
+	 $username = array(
+		'name' => 'username',
+		'id' => 'username',
+	);
+	 echo form_label('Username','username') . ': ';
+	echo form_input($username) . '<br />';
+	
+	 $password = array(
+		'name' => 'password',
+		'id' => 'password',
+	);
+	 echo form_label('Password','password') . ': ';
+	echo form_input($password) . '<br />';
+	// add bio and interests
+	
+	$bio = array(
+		'name' => 'bio',
+		'id' => 'bio',
+	);
+	 echo form_label('Bio','bio') . ': ';
+	echo form_textarea($bio) . '<br />';
+	
+	/*$interests = array(
+		'name' => 'interests',
+		'id' => 'interests',
+	);*/
+	
+	$interests = array(
+		'baackpack_cal' => 'Backpack California',
+		'cycle_cal' => 'Cycle California',
+		'nature_watch' => 'Nature Watch',
+	);
+	 echo form_label('Interests','interests') . ': ';
+	echo form_multiselect('interests',$interests) . '<br />';
+	
     $num_tours1 = array(
 		'name' => 'num_tours',
 		'id' => 'num_tours1',
@@ -89,4 +131,5 @@ echo validation_errors();
 	
 	 
 ?>
+<?=form_submit('submit','Add To Mailing List');?>
 <?=form_close();?>
