@@ -51,18 +51,31 @@ class Mailing_list extends CI_Controller
   {//will insert the data entered via add()
   $this->load->model('Mailing_list_model');
 	$this->load->library('form_validation');
-	$this->load->helper('url');	  
+	$this->load->helper('url');	
+	$this->form_validation->set_rules('email','Email','trim|required|valid_email');  
   //echo "Insert clicked!";
 	  /*echo '<pre>';
 	  var_dump($_POST);
-	  echo '</pre>';*/
-	  if($this->form_validation->run == FALSE){
+	  echo '</pre>';*/	  
+	//must have at least on validation rule to test.		  
+	  if($this->form_validation->run() == FALSE){
 		 //failed validation - send back to form 
-		  echo "Insert Failed!";
+		
+	 $this->load->helper('form');
+     $data['title']= "Adding a record!";
+     $data['style']= "cerulean.css";
+     $data['banner']= "Data Entry Error !";
+     $data['copyright']= "copyright goes here!";
+     $data['base_url']= base_url();
+     $this->load->view('header',$data);
+     $this->load->view('mailing_list/add_mailing_list',$data);
+     $this->load->view('footer',$data);
+		  
+		 echo "Insert Failed!";
 		  
 		  }else{//insert data
-			  $post = arry(
-			  	'first_name'=> $this->input->post('first_name'),
+			  $post = array(
+			  	'first_name'=>$this->input->post('first_name'),
 			  	'last_name'=> $this->input->post('last_name'),
 			  	'email'=> $this->input->post('email'),
 			  	'address' => $this->input->post('address'),
