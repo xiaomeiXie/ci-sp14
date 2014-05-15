@@ -25,7 +25,7 @@ class Mailing_list_model extends CI_Model
 	public function insert($row)
 	{
 		$this->db->insert('mailing_list',$row);
-		
+		return $this->db->insert_id();
 	}//end insert();
 	
 }
