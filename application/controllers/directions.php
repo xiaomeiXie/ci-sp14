@@ -5,12 +5,14 @@ class News extends CI_Controller
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
+		$this->load->model('Directons_model');
 		}
    public function index()
    {//here we're making data available header and footer
-     $request = "http://news.google.com/news?pz=1&cf=all&ned=us&hl=en&output=rss";
    	 $this->load->model('Directons_model');
-   	 $data['xml'] = $this->Directions_model->getLocation($address);
+   	 $this->load->library('form_validation');
+   	
+   	 $data['direct'] = $this->Directions_model->getLocation($address);
    	 
    	 
      $data['title']= "Here is our title tag!";
@@ -28,39 +30,38 @@ class News extends CI_Controller
 	$this->load->model('Directions_model');
 	//$this->load->library('form_validation');
 	$this->load->helper('url');	
-	$this->form_validation->set_rules('address','address','trim|required|valid_address');
-	        
-  //echo "Insert clicked!";
-	  /*echo '<pre>';
-	  var_dump($_POST);
-	  echo '</pre>';*/	  
-	//must have at least on validation rule to test.		  
-	  if($this->form_validation->run() == FALSE){
-		 //failed validation - send back to form 
-		
-	 $this->load->helper('form');
-     $data['title']= "Adding an address!";
-     $data['style']= "cerulean.css";
-     $data['banner']= "Data Entry Error !";
-     $data['copyright']= "copyright goes here!";
-     $data['base_url']= base_url();
-     $this->load->view('header',$data);
-     $this->load->view('directons/add_directions',$data);
-     $this->load->view('footer',$data);
-		  
-		 echo "Insert Failed!";
-		  
-		  }else{//insert data
-			  $post = array(
-			  	'address'=>$this->input->post('address'),
-			  	
-			  	
-			  
-			  );
-			  $this->Directions_model->map($post);
-			  echo "Data Inserted?";
-			  }
-	  
+	var directionsDisplay;
+		var directionsService = new google.maps.DirectionsService();
+		var map;
+
+		function initialize() {
+		  directionsDisplay = new google.maps.DirectionsRenderer();
+		  var myStart = new google.maps.LatLng($sLat, $sLng);
+		  var mapOptions = {
+			zoom:7,
+			center: myStart
+		  }
+		  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		  directionsDisplay.setMap(map);
+		  directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+		  calcRoute();
+		}
+
+		function calcRoute() {
+		  var start = new google.maps.LatLng($sLat, $sLng);
+		  var end = new google.maps.LatLng($dLat, $dLng);
+		  var request = {
+			  origin:start,
+			  destination:end,
+			  travelMode: google.maps.TravelMode.DRIVING
+		  };
+		  directionsService.route(request, function(response, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+			  directionsDisplay.setDirections(response);
+			}
+		  });
+		}
+		google.maps.event.addDomListener(window, 'load', initialize);
 	
 	   
 	}

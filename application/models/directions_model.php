@@ -7,6 +7,12 @@ class Directions_model extends CI_Model
 		//$this->load->database();	
 		
 	}
+	$address=urlencode("2200 2nd Avenue, Seattle, WA 98121");
+$loc = $this->getLocation($address);
+
+$lat = $loc['lat'];
+$lng = $loc['lng'];
+	private $url = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=";
 	public function getLocation($address)
 	{
 	 $url = self::$url.urlencode($address);
@@ -16,11 +22,6 @@ class Directions_model extends CI_Model
         
         $resp = json_decode($resp_json, true);
 		
-        echo '<pre>';
-        var_dump($resp_json);
-        echo '</pre>';
-        die;
-        
 		//return $resp;
 		
         if($resp['status']='OK'){
@@ -31,7 +32,16 @@ class Directions_model extends CI_Model
   //$response = file_get_contents($request);
  //return simplexml_load_string($response);
 }
-}
+ static private function curl_file_get_contents($URL){
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_URL, $URL);
+        $contents = curl_exec($c);
+        curl_close($c);
 
+        if ($contents) return $contents;
+            else return FALSE;
+    }
+}
 
 ?>
