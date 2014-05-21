@@ -21,16 +21,16 @@ class News extends CI_Controller
      $data['copyright']= "copyright goes here!";
      $data['base_url']= base_url();
      $this->load->view('header',$data);
-     $this->load->view('directions/add_directions',$data);
+     $this->load->view('directions/view_directions',$data);
      $this->load->view('footer',$data);
    	
    }
-   public function map()
+ public function map()
    {
 	$this->load->model('Directions_model');
 	//$this->load->library('form_validation');
 	$this->load->helper('url');	
-	var directionsDisplay;
+	    var directionsDisplay;
 		var directionsService = new google.maps.DirectionsService();
 		var map;
 
