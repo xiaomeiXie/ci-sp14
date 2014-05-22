@@ -1,5 +1,5 @@
 <?php
-//news_model.php
+//directions_model.php
 class Directions_model extends CI_Model
 {
 	public function __construct()
@@ -7,13 +7,14 @@ class Directions_model extends CI_Model
 		//$this->load->database();	
 		
 	}
-	$address=urlencode("2200 2nd Avenue, Seattle, WA 98121");
+/*	$address=urlencode("2200 2nd Avenue, Seattle, WA 98121");
 $loc = $this->getLocation($address);
 
 $lat = $loc['lat'];
 $lng = $loc['lng'];
-	private $url = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=";
-	public function getLocation($address)
+*/
+	static private $url = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=";
+	static public function getLocation($address)
 	{
 	 $url = self::$url.urlencode($address);
         
